@@ -1,0 +1,17 @@
+h1 {
+    border: 2px #eee solid;
+    color: brown;
+    text-align: center;
+    padding: 10px;
+}
+
+h3 {
+    color: black;
+    text-align: center;
+}
+
+.form-group-name form input {
+    float: left;
+    clear: both;
+    font-size: 1.5em;
+}
