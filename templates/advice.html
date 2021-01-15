@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css?v=3') }}">  -->
+<!--    <link rel="stylesheet" href="../static/css/style.css?v=3" type="text/css" />  -->
+    <title>Stock Smart</title>
+    <style></style>
+</head>
+
+<body>
+   
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Income Recommendation</h2>
+<p>Based on your income we recommend to invest..</p>
+	{% for post in posts %}
+		<h2>{{ post['Base'] }}</h2>
+	{% endfor %}
+        <p> per month </p> <br><br> 
+        <p> This is a great staring point! </p>
+<form method="post">
+	<a href="divident">
+    	<div class="form-group" style="width:240px;">
+        	<button type="submit" class="btn btn-primary">Continue</button>
+    	</div>
+	</a>
+</form>
+{% endblock %}
+</body>
+</html>

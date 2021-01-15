@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css?v=3') }}">  -->
+<!--    <link rel="stylesheet" href="../static/css/style.css?v=3" type="text/css" />  -->
+    <title>Stock Smart</title>
+    <style></style>
+</head>
+
+<body>
+   
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome to Stock Smart</h2>
+<p>Enter your information and we will help you start your investment journey</p>
+
+<form method="post">
+	<div class="form-group-name" style="display:inline-block;">
+		<div class="fname" style="float:left; width:240px";>
+            		<label for="FirstName">First Name</label>
+            		<input type="text" name="FirstName" placeholder="John" class="form-control"
+               			value="{{ request.form['FirstName'] }}"></input>
+		</div>
+		<div class="lname" style="float:left; width:270px; padding-left:30px";>
+            		<label for="LastName">Last Name</label>
+            		<input type="text" name="LastName" placeholder="Paxton" class="form-control"
+               			value="{{ request.form['LastName'] }}"></input>
+		</div>
+    	</div><br>  
+
+   	
+	<div class="form-group" style="display:inline-block;">
+		<div class="street" style="float:left; width:240px";>
+            		<label for="Street">Street Address</label>
+            		<input type="text" name="Street" placeholder="street" class="form-control"
+               			value="{{ request.form['Street'] }}"></input>
+		</div>
+		<div class="apt" style="float:left; width:270px; padding-left:30px";>
+            		<label for="Apartment">Apartment Number</label>
+            		<input type="text" name="Apartment" placeholder="apt" class="form-control"
+               			value="{{ request.form['Apartment'] }}"></input>
+		</div>
+    	</div> <br>
+
+    	<div class="form-group" style="display:inline-block;">
+		<div class="zip" style="float:left; width:240px";>
+            		<label for="Zipcode">Zip Code</label>
+            		<input type="number" name="Zipcode" placeholder="59715" class="form-control"
+               			value="{{ request.form['Zipcode'] }}"></input>
+		</div>
+		<div class="state" style="float:left; width:270px; padding-left:30px";>
+            		<label for="State">State</label>
+            		<select name="State" id="states" placeholder="Montana" class="form-control">
+				<option value="" selected="selected">Select a State</option>
+  				<option value="AL">Alabama</option>
+  				<option value="AK">Alaska</option>
+				<option value="AZ">Arizona</option>
+				<option value="AR">Arkansas</option>
+  				<option value="CA">California</option>
+  				<option value="CO">Colorado</option>
+  				<option value="CT">Connecticut</option>
+  				<option value="DE">Delaware</option>
+  				<option value="DC">District Of Columbia</option>
+  				<option value="FL">Florida</option>
+  				<option value="GA">Georgia</option>
+  				<option value="HI">Hawaii</option>
+  				<option value="ID">Idaho</option>
+  				<option value="IL">Illinois</option>
+  				<option value="IN">Indiana</option>
+  				<option value="IA">Iowa</option>
+  				<option value="KS">Kansas</option>
+  				<option value="KY">Kentucky</option>
+  				<option value="LA">Louisiana</option>
+  				<option value="ME">Maine</option>
+  				<option value="MD">Maryland</option>
+  				<option value="MA">Massachusetts</option>
+  				<option value="MI">Michigan</option>
+  				<option value="MN">Minnesota</option>
+  				<option value="MS">Mississippi</option>
+  				<option value="MO">Missouri</option>
+  				<option value="MT">Montana</option>
+  				<option value="NE">Nebraska</option>
+  				<option value="NV">Nevada</option>
+  				<option value="NH">New Hampshire</option>
+  				<option value="NJ">New Jersey</option>
+  				<option value="NM">New Mexico</option>
+  				<option value="NY">New York</option>
+  				<option value="NC">North Carolina</option>
+  				<option value="ND">North Dakota</option>
+  				<option value="OH">Ohio</option>
+  				<option value="OK">Oklahoma</option>
+  				<option value="OR">Oregon</option>
+  				<option value="PA">Pennsylvania</option>
+  				<option value="RI">Rhode Island</option>
+  				<option value="SC">South Carolina</option>
+  				<option value="SD">South Dakota</option>
+  				<option value="TN">Tennessee</option>
+  				<option value="TX">Texas</option>
+  				<option value="UT">Utah</option>
+  				<option value="VT">Vermont</option>
+  				<option value="VA">Virginia</option>
+  				<option value="WA">Washington</option>
+  				<option value="WV">West Virginia</option>
+  				<option value="WI">Wisconsin</option>
+  				<option value="WY">Wyoming</option>               			
+			</select>
+		</div>
+    	</div> <br>
+	<div class="form-group" style="display:inline-block;">
+		<div class="form-group" style="float:left; width:240px;"> 
+			<label for="Age">Age</label>
+             		<input type="number" name="Age" placeholder="20" class="form-control"
+				value="{{ request.form['Age'] }}"></input>
+    		</div>  
+    		<div class="form-group" style="float:left; width:250px; padding-left:30px">
+             		<label for="Budget">Monthly Income Before Tax</label>
+             		<input type="number" name="Budget" placeholder="0.00" class="form-control"
+				value="{{ request.form['Budget'] }}"></input>
+		</div>
+	</div> <br>
+
+	<a href="advice">
+    	<div class="form-group" style="width:240px;">
+        	<button type="submit" class="btn btn-primary">Continue</button>
+    	</div>
+	</a>
+</form>
+{% endblock %}
+</body>
+</html>

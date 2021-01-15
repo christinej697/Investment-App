@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>StockSmart</title>
+<!--	<link type="text/css"  href="{{url_for('static', filename= 'css/style.css?v=1') }}" rel="stylesheet" />  -->
+	<link type="text/css"  href="../static/css/style.css?v=1" rel="stylesheet" />
+</head>
+
+<body>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Welcome to StockSmart {% endblock %}</h1>
+   
+        <a href="signIn">
+            <h2>Sign In</h2>
+        </a>   
+        <a href="quote">
+	    <h2>Favored Share Status</h2>
+	</a>
+        <hr>   
+    
+{% endblock %}
+	
+</body>
+</html>
