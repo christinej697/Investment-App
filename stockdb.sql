@@ -12,5 +12,6 @@ CREATE TABLE users (
     State VARCHAR(10),
     Email VARCHAR(30),
     Budget Float(10,2) NOT NULL,
-    Base  Float(10,2)
+    Base  Float(10,2),
+    Divident VARCHAR(2)
 );
