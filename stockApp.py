@@ -4,17 +4,20 @@
 # how to start their investments of stock market.
 #----------------------------------------------------
 import sqlite3
-import stockdb as sd
 from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
 
-fname = lname = ""
-street = apt = state = ""
-zip = age = budget = 0
 #-----------------------------------------------------
 
 def get_db_connection():
     conn = sqlite3.connect('database/database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+#------------------------------------------------------
+
+def initial_db_connection():
+    conn = sqlite3.connect('database/database.db')
+    conn.execute('DELETE FROM users')
     conn.row_factory = sqlite3.Row
     return conn
 #------------------------------------------------------
@@ -38,7 +41,6 @@ app.config['SECRET_KEY'] = 'your secret key'
 
 @app.route('/')
 def index():
-    sd
     conn = get_db_connection()
     posts = conn.execute('SELECT * FROM users').fetchall()
     conn.close()
@@ -108,20 +110,31 @@ def divident():
     posts = conn.execute('SELECT * FROM users').fetchall()
     conn.close()
     if request.method == 'POST':
-       return redirect(url_for('display'))
+        divid=request.form['divident']
+        if divid=="divident":
+            temp="Y"
+        else:
+            temp="N"
+        conn = get_db_connection()
+        conn.execute('UPDATE users SET Divident = ? WHERE id = 1', (temp))
+        conn.commit()
+        return redirect(url_for('display', divid=divid))
     return render_template('divident.html', posts=posts)
 
 #------------------------------------------------
 
 @app.route('/signIn/advice/divident/display', methods=('GET', 'POST'))
 def display():
+    divid = request.args.get('divid')
     conn = get_db_connection()
     posts = conn.execute('SELECT * FROM users').fetchall()
     conn.close()
     if request.method == 'POST':
        return redirect(url_for('index'))
-    return render_template('display.html', posts=posts)
-
+    if divid=="divident":
+       return render_template('bonus.html', posts=posts)
+    else:
+       return render_template('unbonus.html', posts=posts)
 #------------------------------------------------
 
 #@app.route('/<int:post_id>')
