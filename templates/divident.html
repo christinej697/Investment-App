@@ -8,9 +8,9 @@
     <style>
 	.with, .without {
 		width: 450px;
-		height: 180px;
+		height: 160px;
 		border: 2px solid red;
-		
+		margin-left: 15px;
 	}
     </style>
 </head>
@@ -27,28 +27,34 @@
 
 	<div class="form-group" style="display:inline-block">    
 	    <div class="bonus" >   	   
-            	<input type="radio" id="divident" name="divident" value="divident" checked="checked" />
+            	<input type="radio" id="divident" name="divident" value="divident" 
+		       style="float:left" onclock="myFunction(this.value)" >
             	<label for="divident" class="with">Divident--<br> Divident stocks are great for beginners. 
 			This type of stock are low risk. Depending on which company you invest in, 
                         you will receive $$$ every quarter. Because these are low risk stocks and more stable, 
                         they are good for long term plans. Short term gains are low, but it adds up!</label>
-	    </div>
+	    </div><br>
 	    
-	   
-            	<input type="radio" id="undivident" name="divident" value="undivident" />
+	    <div class="nonbonus">
+            	<input type="radio" id="undivident" name="divident" value="without divident" 
+		       style="float:left" onclock="myFunction(this.value)" >
             	<label for="undivident" class="without">Without Divident--<br> 
 			Stocks without divident are for the risk takers.Depending on which company you invest in, 
 			you can earn a lot really fast or lose a lot really fast. It's a gamble!</label>
-	<div><br>
+	    </div>
+	</div><br>
     
 
-
+	Your favorite brower is: <input type="text" id="result" >
 	<a href="display">
-    	<div class="form-group" style="width:240px;">
-        	<button type="submit" class="btn btn-primary">Continue</button>
-    	</div>
+		<input type="submit" value="Submit form">
 	</a>
 </form>
+<script>
+	function myFunction(divident) {
+		document.getElementById('result').value=divident;
+	}
+</script>
 {% endblock %}
 </body>
 </html>
