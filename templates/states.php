@@ -1,10 +1,10 @@
 <?php
-  $fn = fopen("states.txt","r");
-  
-  while(! feof($fn))  {
-	$result = fgets($fn);
-	echo $result;
+$file = fopen("states.txt","r");
+
+while(! feof($file))
+  {
+  echo fgets($file). "<br />";
   }
 
-  fclose($fn);
+fclose($file);
 ?>
