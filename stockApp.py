@@ -4,32 +4,61 @@
 # how to start their investments of stock market.
 #----------------------------------------------------
 import sqlite3
-from flask import Flask, render_template, request, url_for, flash, redirect
+from flask import Flask, render_template, request, url_for, flash, redirect, jsonify
 from werkzeug.exceptions import abort
 
+import yfinance as yf
+import datetime
+import numpy as np
+import pandas as pd
+import requests
+import matplotlib
+from yahoo_fin import stock_info as si
+from yahoo_fin.stock_info import get_data
+from dividdb import set_dividdb
+
+basebudge = 0
 #-----------------------------------------------------
 
 def get_db_connection():
     conn = sqlite3.connect('database/database.db')
+
     conn.row_factory = sqlite3.Row
     return conn
-#------------------------------------------------------
+
+#-----------------------------------------------------
+# initialize users table
+#-----------------------------------------------------
 
 def initial_db_connection():
     conn = sqlite3.connect('database/database.db')
     conn.execute('DELETE FROM users')
+
     conn.row_factory = sqlite3.Row
     return conn
+#-----------------------------------------------------
+# initialize dividend table
+#-----------------------------------------------------
+
+def initial_dividdb_connection():
+    conn = sqlite3.connect('database/database.db')
+    conn.execute('DELETE FROM dividends')
+    conn.commit()
+
+    conn.row_factory = sqlite3.Row
+    return conn
+
 #------------------------------------------------------
 # Create a new Flask route with a view function and a new HTML
 # template to display an individual users by ite ID.
 # For example: http://127.0.0.1:5000/1
 #------------------------------------------------------
 
-def get_post(post_id):
+def get_post(post_symbol):
     conn = get_db_connection()
-    post = conn.execute('SELECT * FROM users WHERE id = ?',
-                        (post_id,)).fetchone()
+
+    post = conn.execute('SELECT * FROM dividends WHERE Symbol = ?',
+                        (post_symbol,)).fetchone()
     conn.close()
     if post is None:
         abort(404)
@@ -46,11 +75,75 @@ def index():
     conn.close()
     return render_template('index.html', posts=posts)
 
+#---------------------------------------------
+
+@app.route('/stocks', methods=('GET', 'POST'))
+def stock():
+    if request.method == 'POST':
+        ticker = request.form['Shares']
+        if not ticker:
+            flash('A share is required!')
+        else:
+            return redirect(url_for('quote', ticker=ticker))
+    return render_template('shares.html')
+
+
+#---------------------------------------------
+def fetch_price(ticker):
+    data = requests.get('https://financialmodelingprep.com/api/v3/stock/real-time-price/{}'.format(ticker.upper()), params={'apikey':'demo'}).json()
+    if data and "price" in data:
+        return data["price"]
+    else:
+        return "none"
+
+@app.route('/stocks/<ticker>')
+def quote(ticker):
+     stock_price = fetch_price(ticker)
+#     return "This price of {} is {}".format(ticker, stock_price)
+
+
+     symbol =request.args.get('symbol', default=ticker)
+     period = request.args.get('period', default="1y")
+     interval = request.args.get('interval', default="1mo")
+
+	#pull the quote
+     quote = yf.Ticker(symbol)	
+     amazon_weekly= get_data("amzn", start_date="12/04/2009", end_date="12/04/2019", index_as_date = True, interval="1wk")
+
+     return render_template('simple.html', tables=[df.to_html(classes='data')], titles=df.columns.values)
+#     df = amazon_weekly.values.tolist()
+#     JSONP_data = jsonify(df)
+#     return JSONP_data
+#     dow_list = si.tickers_dow()
+
+
+#     quote = yf.Ticker(symbol)
+#     return quote.info
+#--------------------------------------------------
+# API route for pulling the stock history
+#--------------------------------------------------
+
+@app.route("/history")
+def display_history():
+	#get the query string parameters
+	symbol = request.args.get('symbol', default="AAPL")
+	period = request.args.get('period', default="1y")
+	interval = request.args.get('interval', default="1mo")
+
+	#pull the quote
+	quote = yf.Ticker(symbol)	
+	#use the quote to pull the historical data from Yahoo finance
+	hist = quote.history(period=period, interval=interval)
+	#convert the historical data to JSON
+	data = hist.to_json()
+	#return the JSON in the HTTP response
+	return data
 
 #---------------------------------------------
 
 @app.route('/signIn', methods=('GET', 'POST'))
 def signin():
+    global basebudge
     conn = get_db_connection()
     post = conn.execute('SELECT * FROM users').fetchall()
     conn.close()
@@ -77,7 +170,9 @@ def signin():
                 base = int(budget)*0.12
             else:
                 base = int(budget)*0.15
-            conn = get_db_connection()
+            basebudge = base
+
+            conn = initial_db_connection()
             conn.execute('INSERT INTO users (FirstName, LastName, Age, Street, Apartment, Zipcode, State, Budget, Base) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         (fname, lname, age, street, apt, zip, state, budget, base))
             conn.commit()
@@ -85,12 +180,8 @@ def signin():
 
     return render_template('users.html', post=post)
 
-#---------------------------------------------
-
-@app.route('/quote', methods=('GET', 'POST'))
-def home():
-    return render_template('homepage.html')
-
+#------------------------------------------------
+# Display the budget of recommendation
 #------------------------------------------------
 
 @app.route('/signIn/advice', methods=('GET', 'POST'))
@@ -98,46 +189,79 @@ def advice():
     conn = get_db_connection()
     posts = conn.execute('SELECT * FROM users').fetchall()
     conn.close()
+
     if request.method == 'POST':
-       return redirect(url_for('divident'))
+
+        return redirect(url_for('dividend'))
     return render_template('advice.html', posts=posts)
 
 #------------------------------------------------
 
-@app.route('/signIn/advice/divident', methods=('GET', 'POST'))
-def divident():
+@app.route('/signIn/advice/dividend', methods=('GET', 'POST'))
+def dividend():
+    global basebudge
     conn = get_db_connection()
     posts = conn.execute('SELECT * FROM users').fetchall()
     conn.close()
+
     if request.method == 'POST':
-        divid=request.form['divident']
-        if divid=="divident":
-            temp="Y"
-        else:
-            temp="N"
+        divid=request.form['dividend']
+        initial_dividdb_connection()
         conn = get_db_connection()
-        conn.execute('UPDATE users SET Divident = ? WHERE id = 1', (temp))
+        if divid=="dividend":
+            conn.execute('UPDATE users SET Dividend = ? WHERE id = 1', "Y")
+        else:
+            conn.execute('UPDATE users SET Dividend = ? WHERE id = 1', "N")
         conn.commit()
+        conn.close()
+
+        dow_list = si.tickers_dow()
+        print(dow_list[0:10])
+
+        for ticker in dow_list[0:10]:
+            quote_table = si.get_quote_table(ticker)
+            quoteopen = quote_table["Open"]
+            if quoteopen <= basebudge:
+                quotedivid = quote_table["Forward Dividend & Yield"]
+
+                if divid=="dividend" and quotedivid!="N/A (N/A)":
+                    quote = yf.Ticker(ticker)
+                    quotename = quote.info["shortName"]
+                    conn = get_db_connection()
+                    conn.execute('INSERT INTO dividends (Symbol, Company, Price, DividendYield) VALUES(?, ?, ?, ?)',
+                        (ticker, quotename, quoteopen, quotedivid ))
+                    conn.commit()
+                    conn.close()
+
+                if divid=="without dividend" and quotedivid=="N/A (N/A)":
+                    quote = yf.Ticker(ticker)
+                    quotename = quote.info["shortName"]
+                    conn = get_db_connection()
+                    conn.execute('INSERT INTO dividends (Symbol, Company, Price, DividendYield) VALUES(?, ?, ?, ?)',
+                        (ticker, quotename, quoteopen, quotedivid ))
+                    conn.commit()
+                    conn.close()
+
         return redirect(url_for('display', divid=divid))
-    return render_template('divident.html', posts=posts)
+    return render_template('dividend.html', posts=posts)
 
 #------------------------------------------------
 
-@app.route('/signIn/advice/divident/display', methods=('GET', 'POST'))
+@app.route('/signIn/advice/dividend/display', methods=('GET', 'POST'))
 def display():
+
     divid = request.args.get('divid')
-    conn = get_db_connection()
-    posts = conn.execute('SELECT * FROM users').fetchall()
+    conn =get_db_connection()
+    posts = conn.execute('SELECT * FROM dividends').fetchall()
     conn.close()
     if request.method == 'POST':
-       return redirect(url_for('index'))
-    if divid=="divident":
-       return render_template('bonus.html', posts=posts)
-    else:
-       return render_template('unbonus.html', posts=posts)
+        return redirect(url_for('post'))
+
+    return render_template('filter.html', posts=posts)
+
 #------------------------------------------------
 
-#@app.route('/<int:post_id>')
-#def post(post_id):
-#    post = get_post(post_id)
-#    return render_template('post.html', post=post)
+@app.route('/<post_symbol>')
+def post(post_symbol):
+    post = get_post(post_symbol)
+    return render_template('post.html', post=post)
