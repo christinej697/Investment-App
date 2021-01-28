@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">  
+<!--        <link rel="stylesheet" href="../static/css/style.css?v=3" type="text/css" /> -->
+    <title>Stock Smart</title>
+    <style>
+<!--	ul {
+	   list-style-type:none;
+	} -->
+
+	li span {
+	   display:inline-block;
+	   width:250px;
+	}
+
+	a.detail:visited, a.detail:link {
+	   text-decoration: none;
+	}
+
+	a.detail:hover, a.detail:active {
+	   font-style: italic;
+           font-weight: bold;
+	}
+    </style>
+</head>
+
+<body>
+   
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1>{% block title %} Welcome to StockSmart {% endblock %}</h1>
+	<p id="p1"></p>
+        <p id="p2"></p>
+        
+	<script>
+	    var dt = new Date();
+	    var date = dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();
+	    var time = dt.getHours()+":" + dt.getMinutes() + ":" + dt.getSeconds();
+	    var dateTime = date + " " + time;
+	    document.getElementById("p1").innerHTML = dateTime;
+	</script>
+
+	<ul>
+	    <li style="font-weight: bold">
+		<span>Symbol</span>
+		<span>Company</span>
+		<span>Price</span>
+		<span>Forward Dividend & Yield</span>
+            </li>
+	    <p>-----------------------------------------------------------------------------------------------------------------------------------------------------</p>
+	{% for post in posts %}
+	    <li>
+		<a class="detail" href="{{url_for('post', post_symbol=post['Symbol']) }}">
+		<span>{{ post['Symbol'] }}</span>
+		<span>{{ post['Company'] }}</span> 
+		<span>{{ post['Price'] }}</span>
+		<span>{{ post['DividendYield'] }}</span>
+		</a>
+	    </li><br>
+
+	{% endfor %}
+	</ul>
+        <br> 
+<form method="post">
+	<a href="/">
+    	<div class="form-group" style="width:240px;">
+        	<button type="submit" class="btn btn-primary">Back</button>
+    	</div>
+	</a>
+</form>
+{% endblock %}
+</body>
+</html>
