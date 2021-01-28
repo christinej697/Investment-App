@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css?v=3') }}">  -->
+<!--    <link rel="stylesheet" href="../static/css/style.css?v=3" type="text/css" />  -->
+    <title>Stock Smart</title>
+    <style></style>
+</head>
+
+<body>
+   
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome to Stock Smart</h2>
+<p>Enter your favirate stock to see its price</p>
+
+<form method="post">
+
+    	<div class="form-group" style="display:inline-block;">
+		<div class="share" style="float:left; width:270px; padding-left:30px";>
+            		<label for="Shares">Shares</label>
+            		<select name="Shares" id="share" placeholder="AAPL" class="form-control">
+				<option value="" selected="selected">Select a Share</option>
+  				<option value="AAPL">Apple</option>
+  				<option value="TSLA">Tesla</option>
+				<option value="GOOG">Google</option>
+				<option value="INTC">Intel</option>
+			</select>
+		</div>
+    	</div> <br>
+
+	<a href="#">
+    	<div class="form-group" style="width:240px;">
+        	<button type="submit" class="btn btn-primary">Continue</button>
+    	</div>
+	</a>
+</form>
+{% endblock %}
+</body>
+</html>
