@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS dividends;
+
+CREATE TABLE dividends (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    Symbol VARCHAR(10) NOT NULL,
+    Company VARCHAR(50),
+    Price Float(10,2),
+    DividendYield VARCHAR(30)
+);
