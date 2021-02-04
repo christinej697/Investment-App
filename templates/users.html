@@ -119,14 +119,19 @@
              		<input type="number" name="Budget" placeholder="0.00" class="form-control"
 				value="{{ request.form['Budget'] }}"></input>
 		</div>
-	</div> <br>
+	</div> 
 
 	<a href="advice">
     	<div class="form-group" style="width:240px;">
         	<button type="submit" class="btn btn-primary">Continue</button>
     	</div>
-	</a>
+	</a>   
+
 </form>
+		<a href="{{ url_for('index') }}">
+        	<button type="submit" class="btn btn-primary">Go Back</button>
+		</a>
+
 {% endblock %}
 </body>
 </html>
