@@ -4,13 +4,15 @@
 # how to start their investments of stock market.
 #----------------------------------------------------
 import sqlite3
-from flask import Flask, render_template, request, url_for, flash, redirect, jsonify
+from flask import Flask, render_template, request, url_for, flash, redirect
 from werkzeug.exceptions import abort
 
 import yfinance as yf
 import datetime
 import numpy as np
 import pandas as pd
+from pandas_datareader import data, wb
+
 import requests
 import matplotlib
 from yahoo_fin import stock_info as si
@@ -220,8 +222,8 @@ def dividend():
 
         for ticker in dow_list[0:10]:
             quote_table = si.get_quote_table(ticker)
-            quoteopen = quote_table["Open"]
-            if quoteopen <= basebudge:
+            quoteprice = round(quote_table["Quote Price"],2)
+            if quoteprice <= basebudge:
                 quotedivid = quote_table["Forward Dividend & Yield"]
 
                 if divid=="dividend" and quotedivid!="N/A (N/A)":
@@ -229,7 +231,7 @@ def dividend():
                     quotename = quote.info["shortName"]
                     conn = get_db_connection()
                     conn.execute('INSERT INTO dividends (Symbol, Company, Price, DividendYield) VALUES(?, ?, ?, ?)',
-                        (ticker, quotename, quoteopen, quotedivid ))
+                        (ticker, quotename, quoteprice, quotedivid ))
                     conn.commit()
                     conn.close()
 
@@ -238,7 +240,7 @@ def dividend():
                     quotename = quote.info["shortName"]
                     conn = get_db_connection()
                     conn.execute('INSERT INTO dividends (Symbol, Company, Price, DividendYield) VALUES(?, ?, ?, ?)',
-                        (ticker, quotename, quoteopen, quotedivid ))
+                        (ticker, quotename, quoteprice, quotedivid ))
                     conn.commit()
                     conn.close()
 
@@ -250,18 +252,57 @@ def dividend():
 @app.route('/signIn/advice/dividend/display', methods=('GET', 'POST'))
 def display():
 
-    divid = request.args.get('divid')
+#    divid = request.args.get('divid')
     conn =get_db_connection()
     posts = conn.execute('SELECT * FROM dividends').fetchall()
     conn.close()
     if request.method == 'POST':
-        return redirect(url_for('post'))
+
+        return redirect(url_for('dividend'))
 
     return render_template('filter.html', posts=posts)
 
 #------------------------------------------------
 
-@app.route('/<post_symbol>')
-def post(post_symbol):
-    post = get_post(post_symbol)
-    return render_template('post.html', post=post)
+@app.route('/<page>', methods=('GET', 'POST'))
+def post(page):
+
+    hsitorical_datas = {}
+    labels = []
+    values = []
+    start = "01/01/2021"
+    end = datetime.date.today()
+    interval="1d"
+    quote = yf.Ticker(page)
+    quotename = quote.info["shortName"]
+    legend = quotename + " Historical Stock Line Chart"
+
+    historical_datas = si.get_data(page, start_date=start, end_date=end)
+    t_labels = historical_datas.index
+    for i in t_labels:
+        labels.append(i.date())
+    t_values = historical_datas.adjclose
+
+    for i in t_values:
+        values.append(round(i,2))
+
+    while True:
+        if request.method == 'POST':
+            start = request.form['Starts']
+            end = request.form['Ends']
+
+            historical_datas = si.get_data(page, start_date=start, end_date=end)
+            t_labels = historical_datas.index
+            labels = []
+            values = []
+
+            for i in t_labels:
+                labels.append(i.date())
+            t_values = historical_datas.adjclose
+
+            for i in t_values:
+                values.append(round(i,2))
+
+#            return redirect(url_for('display'))
+
+        return render_template('chart.html', values=values, labels=labels, legend=legend, start=start, end=end)
