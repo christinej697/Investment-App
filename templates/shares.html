@@ -16,7 +16,7 @@
 <h2>Welcome to Stock Smart</h2>
 <p>Enter your favirate stock to see its price</p>
 
-<form method="post">
+<form method="post" name="myForm" onsubmit="return validateForm()">
 
     	<div class="form-group" style="display:inline-block;">
 		<div class="share" style="float:left; width:270px; padding-left:30px";>
@@ -31,12 +31,25 @@
 		</div>
     	</div> <br>
 
-	<a href="#">
     	<div class="form-group" style="width:240px;">
-        	<button type="submit" class="btn btn-primary">Continue</button>
+        	<button type="submit" value="submit" class="btn btn-primary" style="margin-left:30px;">Continue</button>
     	</div>
-	</a>
 </form>
+	<a href="{{ url_for("index") }}">
+        	<button type="submit" class="btn btn-primary" style="margin-left:30px;">Go Back</button>
+	</a>
+
+	<script>
+		function validateForm() {
+			var x =document.forms["myForm"]["Shares"].value;
+			if (x == "") {
+				alert("Invalid Submit!");
+				return false;
+			} else {
+				return true;
+			}
+		}
+	</script>
 {% endblock %}
 </body>
 </html>
