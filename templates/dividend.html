@@ -24,7 +24,7 @@
 <h2>Types of Investments</h2>
 <p>Choose the type of stock you would like to invest in. There are no wrong choices!</p>
 
-<form method="post" action="">
+<form method="post" name="myForm" onsubmit="return validateForm()">
 
 	<div class="form-group" style="display:inline-block">    
 	    <div class="bonus" >   	   
@@ -45,24 +45,30 @@
 	    </div>
        	</div><br>
     
-	Your favorite brower is: <input type="text" id="result" >
+	Your favorite brower is: <input type="text" id="result" name="result" >
 	<a href="display">
 		<input type="submit" value="Submit form">
-		
-<!--    	<div class="form-group" style="width:240px;">  -->
-<!--        	<button type="submit" class="btn btn-primary">Continue</button>  -->
-<!--    	</div>  -->
 	</a>
 	
 </form>
 	<a href="{{ url_for('advice') }}">
         	<button type="submit" class="btn btn-primary">Go Back</button>  
 		
-<script>
-function myFunction(divident) {
-	document.getElementById('result').value=divident;
+	<script>
+		function myFunction(dividend) {
+			document.getElementById('result').value=dividend;
 
-}
+		}
+
+		function validateForm() {
+			var x = document.forms["myForm"]["result"].value;
+			if ( x == "" ) {
+				alert("Invalid submit!");
+				return false;
+			} else {
+				return true;
+			}
+		}
 </script>
 {% endblock %}
 </body>
