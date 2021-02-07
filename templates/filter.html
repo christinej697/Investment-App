@@ -53,7 +53,7 @@
 	    <p>-----------------------------------------------------------------------------------------------------------------------------------------------------</p>
 	{% for post in posts %}
 	    <li>
-		<a class="detail" href="{{url_for('post', page=post['Symbol']) }}">
+		<a class="detail" href="{{url_for('post', page=post['Symbol'], checks='display') }}">
 		<span>{{ post['Symbol'] }}</span>
 		<span>{{ post['Company'] }}</span> 
 		<span>{{ post['Price'] }}</span>
