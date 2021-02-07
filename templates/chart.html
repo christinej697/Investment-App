@@ -73,23 +73,42 @@
 	    <div class="form-group" style="display:inline-block; width:600px;">
 		<div class="form-group" style="float:left; width:170px;">
 		    <label for="Starts">Start Date</label>
-		    <input type="date" id="Starts" placeholder="{{start}}" class="form-control"
+		    <input type="date" id="Starts" placeholder="mm/dd/yy" class="form-control"
 		  	name="Starts" value="{{ request.form['Starts'] }}"></input>
 		</div>
 		<div class="form-group" style="width:220px; padding-left:50px; float:left;">
 		    <label for="Ends" >End Date</label>
-		    <input type="date" id="Ends" placeholder="{{end}}" class="form-control"
+		    <input type="date" id="Ends" placeholder="mm/dd/yy" class="form-control"
 			name="Ends" value="{{ request.form['Ends'] }}"></input>
 		</div>
 	    
 		<div class="form-group" style="width:100px; padding-left:50px; padding-top:30px;float:left;">
-			<button name="submit" type="submit" class="btn btn-primary">Submit</button>
+			<button onclick="return checkDate();" type="submit" class="btn btn-primary">Submit</button>
 		</div>
 	    </div>
 	</form>
-	<a href="{{ url_for("display") }}" name="goback">
-		<button class="btn btn-primary" type="submit" styple="padding-top:5px;">Go Back</button>
+	<a href="{{ url_for( checks ) }}", name="goback">
+		<button class="btn btn-primary" type="submit" style="padding-top:5px;">Go Back</button>
 	</a>
+	
+	<script>
+		function checkDate() {
+			var d1 = new Date(document.getElementById("Starts").value);
+			var d2 = new Date(document.getElementById("Ends").value);
+		if (d1.getTime() >= d2.getTime()) {
+			alert("End date is not allowed to be smaller than Start date");
+			return false;
+		} else if (isNaN(d1.getTime())) {
+			alert("Date is not allowed to be empty");
+			return false;
+		} else if (isNaN(d2.getTime())) {
+			alert("Date is not allowed to be empty");
+			return false;
+		} else {
+			return true;
+			}
+		} 
+	</script>
 {% endblock %}
   </body>
 </html>
