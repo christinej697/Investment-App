@@ -16,17 +16,17 @@
 <h2>Welcome to Stock Smart</h2>
 <p>Enter your information and we will help you start your investment journey</p>
 
-<form method="post">
+<form method="post" onsubmit="return validateForm()" name="myForm">
 	<div class="form-group-name" style="display:inline-block;">
 		<div class="fname" style="float:left; width:240px";>
             		<label for="FirstName">First Name</label>
             		<input type="text" name="FirstName" placeholder="John" class="form-control"
-               			value="{{ request.form['FirstName'] }}"></input>
+               			 value="{{ request.form['FirstName'] }}"></input>
 		</div>
 		<div class="lname" style="float:left; width:270px; padding-left:30px";>
             		<label for="LastName">Last Name</label>
             		<input type="text" name="LastName" placeholder="Paxton" class="form-control"
-               			value="{{ request.form['LastName'] }}"></input>
+               			 value="{{ request.form['LastName'] }}"></input>
 		</div>
     	</div><br>  
 
@@ -123,14 +123,33 @@
 
 	<a href="advice">
     	<div class="form-group" style="width:240px;">
-        	<button type="submit" class="btn btn-primary">Continue</button>
+        	<button value="Submit" type="submit" class="btn btn-primary">Continue</button>
     	</div>
 	</a>   
 
 </form>
-		<a href="{{ url_for('index') }}">
+	<a href="{{ url_for('index') }}">
         	<button type="submit" class="btn btn-primary">Go Back</button>
-		</a>
+	</a>
+	<script>
+		function validateForm(){
+			var fn = document.forms["myForm"]["FirstName"].value;
+			var ln = document.forms["myForm"]["LastName"].value;
+			var bg = document.forms["myForm"]["Budget"].value;
+			if (fn == "") {
+				alert("First name is not allowed to be empty");
+				return false;
+			} else if (ln == "") {
+				alert("Last name is not allowed to be empty");
+				return false;
+			} else if (bg <= 0) {
+				alert("Monthly income is invalid");
+				return false;
+			} else{
+				return true;
+			}
+		}
+	</script>
 
 {% endblock %}
 </body>
