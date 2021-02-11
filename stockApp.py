@@ -213,6 +213,8 @@ def post(page, checks):
     hsitorical_datas = {}
     labels = []
     values = []
+    tdivid = []
+    tdate = []
 
     if request.method == 'POST':
         start = request.form['Starts']
@@ -223,7 +225,18 @@ def post(page, checks):
 
     quote = yf.Ticker(page)
     quotename = quote.info["shortName"]
-    legend = quotename + " Historical Stock Line Chart"
+    legend = quotename + " Historical Stock"
+    legendd = quotename + " Historical Dividend"
+    titles = legend + " and Dividend"
+
+    his_divid = quote.history(period="max").Dividends
+    index_divid = his_divid.index
+    k=0
+    for i in his_divid:
+        if i > 0:
+            tdivid.append(i)
+            tdate.append(index_divid[k].date())
+        k = k + 1
 
     historical_datas = si.get_data(page, start_date=start, end_date=end)
     t_labels = historical_datas.index
@@ -234,7 +247,7 @@ def post(page, checks):
     for i in t_values:
         values.append(round(i,2))
 
-    return render_template('chart.html', values=values, labels=labels, legend=legend, checks=checks)
+    return render_template('chart.html', titles=titles, values=values, labels=labels, legend=legend, legendd=legendd, tdate=tdate, tdivid=tdivid, checks=checks)
 
 #------------------------------------------------
 
