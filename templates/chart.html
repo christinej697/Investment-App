@@ -15,10 +15,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-		<h1> {{ legend }} </h1>
+		<h2 style="text-align:center"> {{ titles }} </h2>
 		<!-- bar chart canvas element -->
-		<canvas id="myChart" width="600" height="350"></canvas>
-		<!-- <p id="caption">The chart is displaying a simple line chart.</p>  -->
+		    <div style="display:inline-block;" >
+			<canvas id="myChart" width="600" height="350" style="float:left;"></canvas>
+			<canvas id="myDivid" width="450" height="350" style="padding-left:30px;"></canvas>
+		    </div>
 
 
 
@@ -68,6 +70,53 @@
         		data: chartData,
       			});
     		</script>
+
+		<script>
+<!-- // Global parameters: 
+      // do not resize the chart canvas when its container does (keep at 600x400px) -->
+			Chart.defaults.global.responsive = false;
+
+<!-- // define the chart data  -->
+			var chartData2 = {
+			labels : [{% for item in tdate %}
+				"{{item}}",
+                  		{% endfor %}],
+        		datasets : [{
+            		label: '{{ legendd }}',
+            		fill: true,
+            		lineTension: 0.1,
+            		backgroundColor: "rgba(0, 0, 255,0.4)",
+            		borderColor: "rgba(0, 0, 255,1)",
+            		borderCapStyle: 'butt',
+            		borderDash: [],
+            		borderDashOffset: 0.0,
+            		borderJoinStyle: 'miter',
+            		pointBorderColor: "rgba(0, 0, 255,1)",
+            		pointBackgroundColor: "#fff",
+            		pointBorderWidth: 1,
+            		pointHoverRadius: 5,
+            		pointHoverBackgroundColor: "rgba(0, 0, 255,1)",
+            		pointHoverBorderColor: "rgba(220,220,220,1)",
+            		pointHoverBorderWidth: 2,
+            		pointRadius: 1,
+            		pointHitRadius: 10,
+            		data : [{% for item in tdivid %}
+                      		{{item}},
+                    	{% endfor %}],
+            		spanGaps: false
+        		}]
+      			}
+
+<!--      // get chart canvas  -->
+      		var ctx = document.getElementById("myDivid").getContext("2d");
+
+<!--      // create the chart using the chart canvas  -->
+      			var myDivid = new Chart(ctx, {
+        		type: 'line',
+        		data: chartData2,
+      			});
+    		</script>
+
           
 	<form method="post">
 	    <div class="form-group" style="display:inline-block; width:600px;">
