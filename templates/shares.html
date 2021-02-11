@@ -14,29 +14,52 @@
 
 {% block content %}
 <h2>Welcome to Stock Smart</h2>
-<p>Enter your favirate stock to see its price</p>
+<p>Enter your favirate stock to see its historical price & dividend</p>
 
 <form method="post" name="myForm" onsubmit="return validateForm()">
-
-    	<div class="form-group" style="display:inline-block;">
-		<div class="share" style="float:left; width:270px; padding-left:30px";>
+		<div class="form-group" >
             		<label for="Shares">Shares</label>
-            		<select name="Shares" id="share" placeholder="AAPL" class="form-control">
-				<option value="" selected="selected">Select a Share</option>
-  				<option value="AAPL">Apple</option>
-  				<option value="TSLA">Tesla</option>
-				<option value="GOOG">Google</option>
-				<option value="INTC">Intel</option>
+		
+			<select id="share" name="Shares">
+				<option value="" selected="selected">Select a Company</option>
+  				<option value="AAPL">AAPL - Apple Inc.</option>
+  				<option value="AMGN">AMGN - Amgen Inc.</option>
+				<option value="AXP">American Express Company</option>
+				<option value="BA">Boeing Company</option>
+  				<option value="CAT">Caterpillar, Inc.</option>
+  				<option value="CRM">Salesforce.com Inc.</option>
+				<option value="CSCO">Cisco Systems, Inc.</option>
+				<option value="CVX">Chevron Corporation</option>
+  				<option value="DIS">Walt Disney Company</option>
+  				<option value="DOW">Dow Inc.</option>
+				<option value="GS">Goldman Sachs Group, Inc.</option>
+				<option value="HD">Home Depot, Inc.</option>
+  				<option value="HON">Honeywell International Inc.</option>
+  				<option value="IBM">International Business Machines</option>
+				<option value="INTC">Intel Corporation</option>
+				<option value="JNJ">Johnson & Johnson</option>
+  				<option value="JPM">JP Morgan Chase & Co.</option>
+  				<option value="KO">Coca-Cola Company</option>
+				<option value="MCD">McDonald's Corporation</option>
+				<option value="MMM">3M Company</option>
+  				<option value="MRK">Merck & Company, Inc.</option>
+  				<option value="MSFT">Microsoft Corporation</option>
+				<option value="NKE">Nike, Inc.</option>
+				<option value="PG">Procter & Gamble Company</option>
+  				<option value="TRV">The Travelers Companies Inc.</option>
+  				<option value="UHN">UnitedHealth Group Incorporated</option>
+				<option value="V">Visa Inc.</option>
+				<option value="VZ">Verizon Communications Inc.</option>
+				<option value="WBA">Walgreens Boots Alliance, Inc.</option>
+				<option value="WMT">Walmart Inc.</option>
 			</select>
-		</div>
-    	</div> <br>
+		</div> <br> 
+        	<button type="submit" value="submit" class="btn btn-primary" style="margin-left:50px;">Continue</button>
 
-    	<div class="form-group" style="width:240px;">
-        	<button type="submit" value="submit" class="btn btn-primary" style="margin-left:30px;">Continue</button>
-    	</div>
 </form>
+	<br>
 	<a href="{{ url_for("index") }}">
-        	<button type="submit" class="btn btn-primary" style="margin-left:30px;">Go Back</button>
+        	<button type="submit" class="btn btn-primary" style="margin-left:50px;">Go Back</button>
 	</a>
 
 	<script>
