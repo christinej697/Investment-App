@@ -9,16 +9,17 @@ from werkzeug.exceptions import abort
 
 import yfinance as yf
 import datetime
-import numpy as np
-import pandas as pd
-from pandas_datareader import data, wb
-import html5lib
+#import numpy as np
+#import pandas as pd
+#from pandas_datareader import data, wb
+#import html5lib
 
 import requests
-import matplotlib
+#import matplotlib
 from yahoo_fin import stock_info as si
 from yahoo_fin.stock_info import get_data
 from dividdb import set_dividdb
+from view import HistoricalTicker
 
 basebudge = 0
 #-----------------------------------------------------
@@ -209,13 +210,6 @@ def display():
 @app.route('/<page>/<checks>', methods=('GET', 'POST'))
 def post(page, checks):
 
-
-    hsitorical_datas = {}
-    labels = []
-    values = []
-    tdivid = []
-    tdate = []
-
     if request.method == 'POST':
         start = request.form['Starts']
         end = request.form['Ends']
@@ -223,33 +217,14 @@ def post(page, checks):
         start = "01/01/2021"
         end = datetime.date.today()
 
-    quote = yf.Ticker(page)
-    quotename = quote.info["shortName"]
-    legend = quotename + " Historical Stock"
-    legendd = quotename + " Historical Dividend"
-    titles = legend + " and Dividend"
+    mastervalue = HistoricalTicker(page)
+    values, quotes = mastervalue.build_history(start, end)
+    tvalues = []
+    for i in values["pricevalues"]:
+        tvalues.append(round(i,2))
+    values['pricevalues'] = tvalues
 
-    his_divid = quote.history(period="max").Dividends
-    index_divid = his_divid.index
-    k=0
-    for i in his_divid:
-        if i > 0:
-            tdivid.append(i)
-            tdate.append(index_divid[k].date())
-        k = k + 1
-
-    historical_datas = si.get_data(page, start_date=start, end_date=end)
-    t_labels = historical_datas.index
-    for i in t_labels:
-        labels.append(i.date())
-    t_values = historical_datas.adjclose
-
-    for i in t_values:
-        values.append(round(i,2))
-
-    return render_template('chart.html', titles=titles, values=values, labels=labels, legend=legend, legendd=legendd, tdate=tdate, tdivid=tdivid, checks=checks)
+    return render_template('chart.html',  values = values, quotes=quotes, checks=checks)
 
 #------------------------------------------------
-
-
 
