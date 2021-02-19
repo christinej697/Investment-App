@@ -3,6 +3,7 @@
     <head>
 	<meta charset="UTF-8">
        
+	<!-- Extra libraries to support the search function -->
         <script src='jquery-3.2.1.min.js' type='text/javascript'></script>
         <script src='select2/dist/js/select2.min.js' type='text/javascript'></script>
 
@@ -17,7 +18,7 @@
 <h2>Welcome to Stock Smart</h2>
 <p>Enter your favorite stock to see its historical price & dividend</p>
 
-        
+	<!-- Changed the form to select with options, id is 'selUser' -->
         <!-- Dropdown -->       
         <select id='selUser' style='width: 200px;'>
             <option value='0'>-- Select Stock --</option>          
@@ -59,7 +60,9 @@
                 <button type="submit" class="btn btn-primary" style="margin-left:50px;">Go Back</button>
         </a>
 
-        <!-- Script -->
+        <!-- Script for search filter function -->
+	<!-- This works when the html is run on its own -->
+	<!-- But when run in Flask, the search ability dissapears -->
         <script>
         $(document).ready(function(){
             
@@ -76,6 +79,8 @@
         });
         </script>
 
+	<!-- Script for submit function -->
+	<!-- Currently, the website isn't moving to the next page when you press submit button -->
         <script>
                 function validateForm() {
                         var x = $('#SelUser').val();
