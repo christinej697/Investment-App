@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang = "en">
+    <head>
+	<meta charset="UTF-8">
+       
+        <script src='jquery-3.2.1.min.js' type='text/javascript'></script>
+        <script src='select2/dist/js/select2.min.js' type='text/javascript'></script>
+
+        <link href='select2/dist/css/select2.min.css' rel='stylesheet' type='text/css'>
+	<title>Stock Smart</title>
+    </head>
+<body>
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome to Stock Smart</h2>
+<p>Enter your favorite stock to see its historical price & dividend</p>
+
+        
+        <!-- Dropdown -->       
+        <select id='selUser' style='width: 200px;'>
+            <option value='0'>-- Select Stock --</option>          
+            <option value='APPL'>APPL - Apple Inc.</option>  
+            <option value='AMGN'>AMGN - Amgen Inc.</option>   
+            <option value='AMZN'>AMZN - Amazon.com, Inc.</option>        
+            <option value='AXP'>AXP - American Express Company</option>        
+            <option value='BA'>BA - Boeing Company</option>        
+            <option value='CAT'>CAT - Caterpillar, Inc.</option>        
+            <option value='CRM'>CRM - Salesforce.com Inc.</option> 
+	    <option value='CSCO'>CSCO - Cisco Systems, Inc.</option>
+	    <option value='CVX'>CVX - Chevron Corporation</option>
+	    <option value='DIS'>DIS - Walt Disney Company</option>
+            <option value='DOW'>DOW - Dow Inc.</option>
+	    <option value='GOOGL'>GOOGL - Alphabet Inc Class A</option>
+            <option value='GS'>GS - Goldman Sachs Group, Inc</option>
+            <option value='HD'>HD - Home Depot, Inc.</option>
+            <option value='HON'>HON - Honeywell International Inc.</option>
+	    <option value='IBM'>IBM - International Business Machines</option>
+            <option value='INTC'>INTC - Intel Corporation</option>
+            <option value='JNJ'>JNJ - Johnson & Johnson</option>
+            <option value='JPM'>JPM - JP Morgan Chase & Co.</option>
+	    <option value='KO'>KO - Coca-Cola</option>
+            <option value='MCD'>MCD - McDonald's Corporation</option>
+            <option value='MMM'>MMM - 3M Company</option>
+            <option value='MRK'>MRK - Merck & Company</option>
+            <option value='MSFT'>MSFT - Microsoft Corporation</option>
+            <option value='NKE'>NKE - Nike, Inc.</option>
+            <option value='PG'>PG - Procter & Gamble Company</option>
+            <option value='TRV'>TRV - The Travelers Companies Inc.</option>
+            <option value='UHN'>UHN - UnitedHealth Group Incorporated</option>
+            <option value='V'>V - Visa Inc.</option>
+            <option value='VZ'>VZ - Verizon Communications Inc.</option>
+            <option value='WBA'>WBA - Walgreens Boots Alliance Inc.</option>
+	    <option value='WMT'>WMT - Walmart Inc.</option>
+        </select> <br>
+		<button type="submit" value="submit" class="btn btn-primary" style="margin-left:50px;">Continue</button>
+        <a href="{{ url_for("index") }}">
+                <button type="submit" class="btn btn-primary" style="margin-left:50px;">Go Back</button>
+        </a>
+
+        <!-- Script -->
+        <script>
+        $(document).ready(function(){
+            
+            // Initialize select2
+            $("#selUser").select2();
+
+            // Read selected option
+            $('#but_read').click(function(){
+                var username = $('#selUser option:selected').text();
+                var userid = $('#selUser').val();
+           
+                $('#result').html("id : " + userid + ", name : " + username);
+            });
+        });
+        </script>
+
+        <script>
+                function validateForm() {
+                        var x = $('#SelUser').val();
+                        if (x == "") {
+                                alert("Invalid Submit!");
+                                return false;
+                        } else {
+                                return true;
+                        }
+                }
+        </script>
+{% endblock %}
+    </body>
+</html>
