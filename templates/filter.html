@@ -51,16 +51,22 @@
 		<span>Forward Dividend & Yield</span>
             </li>
 	    <p>-----------------------------------------------------------------------------------------------------------------------------------------------------</p>
+	{{pagination.info}}
+	{{pagination.links}}
+		
 	{% for post in posts %}
 	    <li>
 		<a class="detail" href="{{url_for('post', ticker=post['Symbol'], checks='display') }}">
+			<span>{{ loop.index + pagination.skip }}</span>
 		<span>{{ post['Symbol'] }}</span>
 		<span>{{ post['Company'] }}</span> 
 		<span>{{ post['Price'] }}</span>
 		<span>{{ post['DividendYield'] }}</span>
 		</a>
 	    </li><br>
-
+		
+	{{pagination.links}}
+		
 	{% endfor %}
 	</ul>
         <br> 
