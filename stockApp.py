@@ -12,6 +12,7 @@ import datetime
 import numpy as np
 import pandas as pd
 import tensorflow as tf
+from flask_paginate import Pagination, get_page_parameter
 
 #from pandas_datareader import data, wb
 
@@ -210,11 +211,15 @@ def display():
     conn =get_db_connection()
     posts = conn.execute('SELECT * FROM dividends').fetchall()
     conn.close()
+    
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    pagination = Pagination(page=page, total=len(posts))
+    
     if request.method == 'POST':
 
         return redirect(url_for('dividend'))
 
-    return render_template('filter.html', posts=posts)
+    return render_template('filter.html', posts=posts, pagination=pagination)
 
 #------------------------------------------------
 
