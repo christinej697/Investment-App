@@ -9,17 +9,18 @@ from werkzeug.exceptions import abort
 
 import yfinance as yf
 import datetime
-#import numpy as np
-#import pandas as pd
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+
 #from pandas_datareader import data, wb
-#import html5lib
 
 import requests
-#import matplotlib
 from yahoo_fin import stock_info as si
 from yahoo_fin.stock_info import get_data
 from dividdb import set_dividdb
 from view import HistoricalTicker
+from trains import TrainTicker
 
 basebudge = 0
 #-----------------------------------------------------
@@ -71,6 +72,7 @@ def get_post(post_symbol):
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
+graph = tf.get_default_graph()
 
 @app.route('/')
 def index():
@@ -79,20 +81,19 @@ def index():
     conn.close()
     return render_template('index.html', posts=posts)
 
-#---------------------------------------------------
-
-@app.route('/about', methods=('GET','POST'))
-def about():
-    return render_template('about.html')
-
 #---------------------------------------------
 
-@app.route('/stocks', methods=('GET', 'POST'))
-def stock():
+@app.route('/<hists>', methods=('GET', 'POST'))
+def stocks(hists):
+    if hists == "post":
+        titles = "Historical Price & Dividend"
+    else:
+        titles = "Prediction of Price"
     if request.method == 'POST':
         ticker = request.form['Shares']
-        return redirect(url_for('post', page=ticker, checks='index'))
-    return render_template('shares.html')
+        print("hists: ", hists, ticker)
+        return redirect(url_for(hists, ticker=ticker, checks='index'))
+    return render_template('shares.html', titles=titles)
 
 
 #---------------------------------------------
@@ -167,9 +168,8 @@ def dividend():
         conn.close()
 
         dow_list = si.tickers_dow()
-        print(dow_list[0:10])
 
-        for ticker in dow_list[0:10]:
+        for ticker in dow_list:
             quote_table = si.get_quote_table(ticker)
             quoteprice = round(quote_table["Quote Price"],2)
             if quoteprice <= basebudge:
@@ -213,8 +213,8 @@ def display():
 
 #------------------------------------------------
 
-@app.route('/<page>/<checks>', methods=('GET', 'POST'))
-def post(page, checks):
+@app.route('/<ticker>/<checks>', methods=('GET', 'POST'))
+def post(ticker, checks):
 
     if request.method == 'POST':
         start = request.form['Starts']
@@ -223,7 +223,7 @@ def post(page, checks):
         start = "01/01/2021"
         end = datetime.date.today()
 
-    mastervalue = HistoricalTicker(page)
+    mastervalue = HistoricalTicker(ticker)
     values, quotes = mastervalue.build_history(start, end)
     tvalues = []
     for i in values["pricevalues"]:
@@ -234,3 +234,27 @@ def post(page, checks):
 
 #------------------------------------------------
 
+@app.route('/timeseries/<ticker>', methods=('GET', 'POST'))
+def timeseries(ticker):
+    global graph
+    with graph.as_default():
+        masterinfo = TrainTicker(ticker)
+        info = masterinfo.build_history("5y")
+
+        info["actualprice"] = info["actualprice"].reshape(-1)
+        info["predictprice"] = info["predictprice"].reshape(-1)
+#        info["futureprice"] = info["futureprice"].reshape(-1)
+#        return redirect(url_for('stocks', page=ticker, checks='index'))
+        return render_template('predicted.html', info=info)
+#        return render_template('plot.html', plot_url=info)
+
+
+#-------------------------------------------------
+#@app.route('/timeseries/<ticker>', methods=('GET', 'POST'))
+#def timeseries(ticker):
+#    if request.method == 'POST':
+#        ticker = request.form['Shares']
+#    masterinfo = TrainTicker(ticker)
+#    plot_url = masterinfo.build_history("5y")
+#        return redirect(url_for('stocks', page=ticker, checks='index'))
+#    return render_template('plot.html', plot_url=plot_url)
