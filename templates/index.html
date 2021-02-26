@@ -16,9 +16,13 @@
         <a href="signIn">
             <h2>Sign In</h2>
         </a>   
-        <a href="stocks">
+        <a href=" {{ url_for('stocks', hists='post') }}"  >
 	    <h2>Favored Share Status</h2>
 	</a>
+        <a href="{{ url_for('stocks', hists='timeseries') }}">
+	    <h2>Time Series Machine Learning to Predict Stock Price</h2>
+	</a>
+
         <hr>   
     
 {% endblock %}
