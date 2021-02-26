@@ -95,6 +95,11 @@ def stocks(hists):
         return redirect(url_for(hists, ticker=ticker, checks='index'))
     return render_template('shares.html', titles=titles)
 
+#---------------------------------------------------
+
+@app.route('/about', methods=('GET','POST'))
+def about():
+    return render_template('about.html')
 
 #---------------------------------------------
 
