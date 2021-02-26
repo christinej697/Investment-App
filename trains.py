@@ -1,4 +1,5 @@
 import datetime
+from datetime import date, timedelta
 import yfinance as yf
 from yahoo_fin import stock_info as si
 
@@ -13,13 +14,11 @@ import os
 import math
 from array import array
 
-#import tensorflow as tf
-#from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, LSTM
-#from pyramid.arima import auto_arima
-#from fbprophet import Prophet
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 
 #----------------------------------------
 
@@ -44,41 +43,44 @@ class TrainTicker():
         self.info['name'] = self.quote.info["shortName"]
 #--- parse historical data of a period from Yahoo Finacne
 
-        hist = self.quote.history(period=periods)
+        df = self.quote.history(period=periods)
 #        fig = plt.figure(figsize=(8, 4), dpi=100)
         fig = plt.figure(figsize=(10, 5))
         start = datetime.datetime(2000, 1, 1)
         end = datetime.date.today()
 
-#        hist = self.quote.history(self.ticker, start_date=start, end_date=end, index_as_date=True)
-        df = hist
-        df["Close"]=round(df["Close"], 2)
         n = int(0.8*(len(df)))
-        d=30
+        d=22
         ahead=10
         ep=50
-
         training_set = df.iloc[:n, 3:4].values
         test_set = df.iloc[n:, 3:4].values
-        print("training_set: ", training_set)
-        print("test_set: ", test_set)
-
-# Scale and reshape the data
+#-----------------------------------------------
+#  Data Normalization : Rescaling the data from the original data so that
+#  all values are within the range of 0 and 1.
+#-----------------------------------------------
 
         sc = MinMaxScaler(feature_range = (0, 1))
         training_set_scaled = sc.fit_transform(training_set)
 
+        cols = 22
+        rows = len(training_set_scaled)    # AAPL: 1260*0.8 = 1008
         x_train = []
         y_train = []
-        for i in range(d, n-ahead):
-            x_train.append(training_set_scaled[i-d:i, 0])
-            y_train.append(training_set_scaled[i+ahead, 0])
+        for i in range(rows):
+            end_data = i + cols
+            if end_data > rows-1:
+                break
+            x_train.append(training_set_scaled[i:end_data, 0])  # 0-21, 22-43,...
+            y_train.append(training_set_scaled[end_data, 0])    # 22, 44,...
         x_train, y_train = np.array(x_train), np.array(y_train)
+
         x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 
-
-#  Creae the model will neural network having 3 layers of LSTM.
+#---------------------------------------------------------
+#  Create the model will neural network having 3 layers of LSTM.
 #    Add the LSTM layers and some Dropout regularisation
+#---------------------------------------------------------
 
         model = Sequential()
 
@@ -96,53 +98,62 @@ class TrainTicker():
 
         model.add(Dense(units = 1))
 
-
+#------------------------------------------------------------
 #  Compile and fit the model
+#------------------------------------------------------------
 
         model.compile(optimizer = 'adam', loss = 'mean_squared_error')
         model.fit(x_train, y_train, epochs = ep, batch_size = 32)
 
-
+#-----------------------------------------------------------------
 #  Once the model is created, it can be saved. Proceeding forward,
-#    we need to find out the starting point based on the user inputs for
-#    "Ahead" and "Days". The data is reshaped next.
+#  then we need to find out the starting point based on the user inputs for
+#  "Ahead" and "Days". The data is reshaped next.
+#-----------------------------------------------------------------
 
-        dataset_train = df.iloc[:n, 3:4]
-        dataset_test = df.iloc[n:, 3:4]
-        dataset_total = pd.concat((dataset_train, dataset_test), axis = 0)
-        inputs = dataset_total[len(dataset_total) - len(dataset_test) - d:].values
+        dataset_train = df.iloc[:n, 3:4]    # 1008
+        dataset_test = df.iloc[n:, 3:4]     # 252
+
+        dataset_total = df.iloc[:, 3:4]     # rows: 1260
+
+        inputs = dataset_total[len(dataset_train) - cols:].values   # 1008 - 22 = 986
         inputs = inputs.reshape(-1,1)
-        inputs = sc.transform(inputs)
+        inputs = sc.fit_transform(inputs)   # 274
 
         x_test = []
-        for i in range(d, inputs.shape[0]):
-            x_test.append(inputs[i-d:i, 0])
+        for i in range(cols, inputs.shape[0]):   # 252
+            x_test.append(inputs[i-cols:i, 0])
         x_test = np.array(x_test)
         x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
 
-
+#----------------------------------------------------
 #   Predict with the model on the test data
+#----------------------------------------------------
 
         predicted_stock_price = model.predict(x_test)
         predicted_stock_price = sc.inverse_transform(predicted_stock_price)
 
-        tdate=df.index
-
+        ndate=df.index
+        tdate = []
+        k=0
+        for i in ndate:
+            tdate.append(ndate[k].date())
+            k = k + 1
         df['Date'] = tdate
-        df['Date'] = pd.to_datetime(tdate)
-        print(df['Date'])
         df=df.reset_index(drop=True)
 
+        train_predict_price = np.append(dataset_train, predicted_stock_price)
 
+#-----------------------------------------------------
 #    Plot the actual and predicted data
+#-----------------------------------------------------
 
-        self.info["actualdate"] = df.loc[n:, 'Date']
-        print(self.info["actualdate"])
-        self.info["actualprice"] = dataset_test.values
+        self.info["actualdate"] = df.loc[:, 'Date'] 
+        self.info["actualprice"] = dataset_total.values
         self.info["predictdate"] = df.loc[n:, 'Date']
-        self.info["predictprice"] = predicted_stock_price
+        self.info["predictprice"] = train_predict_price
 
-        plt.plot(df.loc[n:, 'Date'],dataset_test.values, color = 'red', label = 'Actual Price')
+        plt.plot(df.loc[:, 'Date'],dataset_total.values, color = 'red', label = 'Actual Price')
         plt.plot(df.loc[n:, 'Date'],predicted_stock_price, color = 'blue', label = 'Predicted Price')
 
         plt.title('Stock Price Prediction')
