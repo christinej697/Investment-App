@@ -211,7 +211,8 @@ def display():
     conn =get_db_connection()
     posts = conn.execute('SELECT * FROM dividends').fetchall()
     conn.close()
-    
+    print("print the posts list")
+    print(posts)
     page = request.args.get(get_page_parameter(), type=int, default=1)
     pagination = Pagination(page=page, total=len(posts))
     
