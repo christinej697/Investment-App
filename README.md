@@ -15,6 +15,11 @@
 <br><li>Plotting library: Chart.js
 <br><li>Database: MySQL is a relational database management system
 <br><li>HTML, CSS, and JavaScript are used to control presentation, formatting, and layout  
+  
+## Demo
+
+https://user-images.githubusercontent.com/50720457/110575961-19187500-811d-11eb-9dfa-10dadb97c21f.mp4
+
 
 ## Citations
 “Yahoo Finance API - A Complete Guide - AlgoTrading101 Blog.” Quantitative Trading Ideas and Guides - AlgoTrading101 Blog, 11 Jan. 2021, algotrading101.com/learn/yahoo-finance-api-guide/.
