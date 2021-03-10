@@ -36,5 +36,5 @@ https://www.patricksoftwareblog.com/creating-charts-with-chart-js-in-a-flask-app
 Feature Selection for Time Series Forecasting with Python by Jason Brownlee on March 29, 2017 in Time Series
 https://machinelearningmastery.com/feature-selection-time-series-forecasting-python/
 
-Stock Market Predictions with LSTM in Python Thushan Ganegedara January 1st, 2020
-https://www.datacamp.com/community/tutorials/lstm-python-stock-market
+Stock Market Predictions with LSTM in Python by Thushan Ganegedara January 1st, 2020
+<br>https://www.datacamp.com/community/tutorials/lstm-python-stock-market
