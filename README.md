@@ -22,7 +22,8 @@ https://user-images.githubusercontent.com/50720457/110575961-19187500-811d-11eb-
 
 
 ## Citations
-“Yahoo Finance API - A Complete Guide - AlgoTrading101 Blog.” Quantitative Trading Ideas and Guides - AlgoTrading101 Blog, 11 Jan. 2021, algotrading101.com/learn/yahoo-finance-api-guide/.
+“Yahoo Finance API - A Complete Guide - AlgoTrading101 Blog.” Quantitative Trading Ideas and Guides - AlgoTrading101 Blog, 11 Jan. 2021 
+https://algotrading101.com/learn/yahoo-finance-api-guide/
 
 How To Make a Web Application Using Flask in Python 
 By Abdelhadi Dyouri, Published onApril 16, 2020
@@ -31,3 +32,9 @@ https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-u
 Creating Charts with Chart.js in a Flask Application
 JANUARY 1, 2017 / PATKENNEDY79@GMAIL.COM
 https://www.patricksoftwareblog.com/creating-charts-with-chart-js-in-a-flask-application/
+
+Feature Selection for Time Series Forecasting with Python by Jason Brownlee on March 29, 2017 in Time Series
+https://machinelearningmastery.com/feature-selection-time-series-forecasting-python/
+
+Stock Market Predictions with LSTM in Python Thushan Ganegedara January 1st, 2020
+https://www.datacamp.com/community/tutorials/lstm-python-stock-market
