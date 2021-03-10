@@ -37,4 +37,5 @@ Feature Selection for Time Series Forecasting with Python by Jason Brownlee on M
 https://machinelearningmastery.com/feature-selection-time-series-forecasting-python/
 
 Stock Market Predictions with LSTM in Python Thushan Ganegedara January 1st, 2020
+
 https://www.datacamp.com/community/tutorials/lstm-python-stock-market
