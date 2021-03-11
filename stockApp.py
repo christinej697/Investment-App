@@ -12,7 +12,9 @@ import datetime
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from flask_paginate import Pagination, get_page_parameter
+import csv
+
+#from flask_paginate import Pagination, get_page_parameter
 
 #from pandas_datareader import data, wb
 
@@ -73,7 +75,8 @@ def get_post(post_symbol):
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
-graph = tf.get_default_graph()
+#graph = tf.get_default_graph()
+graph = tf.compat.v1.get_default_graph()
 
 @app.route('/')
 def index():
@@ -96,11 +99,6 @@ def stocks(hists):
         return redirect(url_for(hists, ticker=ticker, checks='index'))
     return render_template('shares.html', titles=titles)
 
-#---------------------------------------------------
-
-@app.route('/about', methods=('GET','POST'))
-def about():
-    return render_template('about.html')
 
 #---------------------------------------------
 
@@ -173,7 +171,10 @@ def dividend():
         conn.commit()
         conn.close()
 
-        dow_list = si.tickers_dow()
+#        dow_list = si.tickers_dow()
+        dow_list = get_dowjones()
+#        dow_list = pd.read_csv('dow_jones.csv')
+#        dow_list = [list(row) for row in df.values]
 
         for ticker in dow_list:
             quote_table = si.get_quote_table(ticker)
@@ -211,16 +212,11 @@ def display():
     conn =get_db_connection()
     posts = conn.execute('SELECT * FROM dividends').fetchall()
     conn.close()
-    print("print the posts list")
-    print(posts)
-    page = request.args.get(get_page_parameter(), type=int, default=1)
-    pagination = Pagination(page=page, total=len(posts))
-    
     if request.method == 'POST':
 
         return redirect(url_for('dividend'))
 
-    return render_template('filter.html', posts=posts, pagination=pagination)
+    return render_template('filter.html', posts=posts)
 
 #------------------------------------------------
 
@@ -254,8 +250,6 @@ def timeseries(ticker):
 
         info["actualprice"] = info["actualprice"].reshape(-1)
         info["predictprice"] = info["predictprice"].reshape(-1)
-#        info["futureprice"] = info["futureprice"].reshape(-1)
-#        return redirect(url_for('stocks', page=ticker, checks='index'))
         return render_template('predicted.html', info=info)
 #        return render_template('plot.html', plot_url=info)
 
@@ -269,3 +263,16 @@ def timeseries(ticker):
 #    plot_url = masterinfo.build_history("5y")
 #        return redirect(url_for('stocks', page=ticker, checks='index'))
 #    return render_template('plot.html', plot_url=plot_url)
+
+#-------------------------------------------
+
+def get_dowjones():
+
+    dow_list = []
+    with open('database/dow_jones.csv') as f:
+        line = csv.reader(f)
+        for row in line:
+            dow_list.append(row[0])
+
+    f.close()
+    return dow_list
