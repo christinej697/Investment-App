@@ -17,7 +17,6 @@
 <br><li>HTML, CSS, and JavaScript are used to control presentation, formatting, and layout  
   
 ## Demo
-
 https://user-images.githubusercontent.com/50720457/110575961-19187500-811d-11eb-9dfa-10dadb97c21f.mp4
 
 
