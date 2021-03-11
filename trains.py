@@ -44,14 +44,9 @@ class TrainTicker():
 #--- parse historical data of a period from Yahoo Finacne
 
         df = self.quote.history(period=periods)
-#        fig = plt.figure(figsize=(8, 4), dpi=100)
         fig = plt.figure(figsize=(10, 5))
-        start = datetime.datetime(2000, 1, 1)
-        end = datetime.date.today()
 
         n = int(0.8*(len(df)))
-        d=22
-        ahead=10
         ep=50
         training_set = df.iloc[:n, 3:4].values
         test_set = df.iloc[n:, 3:4].values
@@ -63,18 +58,14 @@ class TrainTicker():
         sc = MinMaxScaler(feature_range = (0, 1))
         training_set_scaled = sc.fit_transform(training_set)
 
-        cols = 22
-        rows = len(training_set_scaled)    # AAPL: 1260*0.8 = 1008
         x_train = []
         y_train = []
-        for i in range(rows):
-            end_data = i + cols
-            if end_data > rows-1:
-                break
-            x_train.append(training_set_scaled[i:end_data, 0])  # 0-21, 22-43,...
-            y_train.append(training_set_scaled[end_data, 0])    # 22, 44,...
+        pastday = 22
+        futureday = 5
+        for i in range(pastday, n):
+            x_train.append(training_set_scaled[i-pastday:i, 0])  # 0-21, 22-43,...
+            y_train.append(training_set_scaled[i, 0])    # 22, 44,...
         x_train, y_train = np.array(x_train), np.array(y_train)
-
         x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 
 #---------------------------------------------------------
@@ -116,13 +107,13 @@ class TrainTicker():
 
         dataset_total = df.iloc[:, 3:4]     # rows: 1260
 
-        inputs = dataset_total[len(dataset_train) - cols:].values   # 1008 - 22 = 986
+        inputs = dataset_total[len(dataset_train) - pastday:].values   # 1008 - 22 = 986
         inputs = inputs.reshape(-1,1)
         inputs = sc.fit_transform(inputs)   # 274
 
         x_test = []
-        for i in range(cols, inputs.shape[0]):   # 252
-            x_test.append(inputs[i-cols:i, 0])
+        for i in range(pastday, inputs.shape[0]):   # 252
+            x_test.append(inputs[i-pastday:i, 0])
         x_test = np.array(x_test)
         x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
 
@@ -153,6 +144,9 @@ class TrainTicker():
         self.info["predictdate"] = df.loc[n:, 'Date']
         self.info["predictprice"] = train_predict_price
 
+#------------------------------------------------------
+# Use matplotlib to display the graph
+#------------------------------------------------------
         plt.plot(df.loc[:, 'Date'],dataset_total.values, color = 'red', label = 'Actual Price')
         plt.plot(df.loc[n:, 'Date'],predicted_stock_price, color = 'blue', label = 'Predicted Price')
 
@@ -168,8 +162,10 @@ class TrainTicker():
 
         STOCK.seek(0)
         plot_url = base64.b64encode(STOCK.getvalue()).decode('utf8')
-        return self.info
 #        return plot_url
+
+#-----------------------------------------------------
+        return self.info
 #--------------------------------------------------
 #        hist = self.quote.history(period=periods)
 #        fig = plt.figure(figsize=(10, 5))
