@@ -1,6 +1,12 @@
 # Investment-App
 Main Contributors: Yuehchen Tsou and Christine Johnson
 <br>This directory contains code for the StockSmart website application. The application is being created as a capstone project for Montana State University. The main code for the application is written in Python using the Flask framework and html to format the website. SQL is used for data manipulation. 
+# Table of Contents
+1. [Technologies Used](##Technologies used)
+2. [Project's Main Functions](## Three main functions of the project)
+3. [Workflow Diagram](## Workflow)
+4. [Project Demo](## Demo of our Project)
+5. [Citations](## Citations)
 
 ## Technologies used
 <li>Python 3.6+
@@ -14,7 +20,7 @@ Main Contributors: Yuehchen Tsou and Christine Johnson
 <li>HTML, CSS, and JavaScript are used to control presentation, formatting, and layout 
   
 ## Three main functions of the project
-1. Simple Recommendation for Beginners
+1. Simple Stock Recommendation List for Beginners
 2. Historical Price & Dividend for Favored Shares
 3. Times Series Machine Learning to Predict Stock Price
   
@@ -42,3 +48,9 @@ https://machinelearningmastery.com/feature-selection-time-series-forecasting-pyt
 
 Stock Market Predictions with LSTM in Python by Thushan Ganegedara January 1st, 2020
 <br>https://www.datacamp.com/community/tutorials/lstm-python-stock-market
+
+Flask Paginate Doc
+https://pythonhosted.org/Flask-paginate/
+
+The Flask Mega-Tutorial Part IX: Pagination
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ix-pagination
