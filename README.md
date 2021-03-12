@@ -31,8 +31,8 @@ Main Contributors: Yuehchen Tsou and Christine Johnson
 ## Demo of our Project <a name="Demo"></a>
 https://user-images.githubusercontent.com/50720457/110575961-19187500-811d-11eb-9dfa-10dadb97c21f.mp4
 
-## How to Run the Project <a name="Running></a>
-After downloading source code from the github page, which will download as "Investment-App-main", open the folder within a running Python environment. To start the StockSmart Flask website, run the following three commands: (1) `export FLASK_APP=stockApp`, (2) `export FLASK_ENV=development`, and (3) `flask run`. Then click the resulting website link, or manually enter `http://127.0.0.1:5000/`, to see the resulting website in action.
+## How to Run the Project <a name="Running"></a>
+After downloading source code from the github page, which will download as "Investment-App-main", open the folder within a running Python environment. To start the StockSmart Flask website, run the following three commands: (1) `export FLASK_APP=stockApp`, (2) `export FLASK_ENV=development`, and (3) `flask run`. Then click the resulting website link, or manually enter `http://127.0.0.1:5000/`, to see the website in action.
 
 ## Citations
 “Yahoo Finance API - A Complete Guide - AlgoTrading101 Blog.” Quantitative Trading Ideas and Guides - AlgoTrading101 Blog, 11 Jan. 2021 
