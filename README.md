@@ -4,7 +4,7 @@ Main Contributors: Yuehchen Tsou and Christine Johnson
 
 ## Technologies used
 <li>Python 3.6+
-<br><li>Web App library: Flask
+<li>Web App library: Flask
 <br><li>Data and array libraries: Pandas and Numpy
 <br><li>Financial data library: Yfinance
 <br><li>Machine learning libraries: Tensorflow, Keras
