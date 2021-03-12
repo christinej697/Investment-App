@@ -5,13 +5,13 @@ Main Contributors: Yuehchen Tsou and Christine Johnson
 ## Technologies used
 <li>Python 3.6+
 <li>Web App library: Flask
-<br><li>Data and array libraries: Pandas and Numpy
-<br><li>Financial data library: Yfinance
-<br><li>Machine learning libraries: Tensorflow, Keras
-<br><li>Machine learning models: LSTM
-<br><li>Plotting library: Chart.js
-<br><li>Database: MySQL is a relational database management system
-<br><li>HTML, CSS, and JavaScript are used to control presentation, formatting, and layout 
+<li>Data and array libraries: Pandas and Numpy
+<li>Financial data library: Yfinance
+<li>Machine learning libraries: Tensorflow, Keras
+<li>Machine learning models: LSTM
+<li>Plotting library: Chart.js
+<li>Database: MySQL is a relational database management system
+<li>HTML, CSS, and JavaScript are used to control presentation, formatting, and layout 
   
 ## Three main functions of the project
 1. Simple Recommendation for Beginners
