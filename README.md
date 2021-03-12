@@ -1,6 +1,7 @@
-# Investment-App
-Main Contributors: Yuehchen Tsou and Christine Johnson
-<br>This directory contains code for the StockSmart website application. The application is being created as a capstone project for Montana State University. The main code for the application is written in Python using the Flask framework and html to format the website. SQL is used for data manipulation. 
+<h1 align = "center"> Investment Web Application: StockSmart </h1>
+_Main Contributors: Yuehchen Tsou and Christine Johnson
+<br>This directory contains code for the StockSmart website application. The application is being created as a capstone project for Montana State University. The main code for the application is written in Python using the Flask framework and html to format the website. SQL is used for data manipulation. _
+
 # Table of Contents
 1. [Technologies Used](#Technologies)
 2. [Project's Main Functions](#Three)
