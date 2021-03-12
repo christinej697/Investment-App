@@ -3,12 +3,12 @@ Main Contributors: Yuehchen Tsou and Christine Johnson
 <br>This directory contains code for the StockSmart website application. The application is being created as a capstone project for Montana State University. The main code for the application is written in Python using the Flask framework and html to format the website. SQL is used for data manipulation. 
 # Table of Contents
 1. [Technologies Used](#Technologies)
-2. [Project's Main Functions](#"Three main functions of the project")
+2. [Project's Main Functions](#"Three")
 3. [Workflow Diagram](#Workflow)
 4. [Project Demo](#Demo)
 5. [Citations](#Citations)
 
-## Technologies used
+## Technologies used <a name="Technologies"></a>
 <li>Python 3.6+
 <li>Web App library: Flask
 <li>Data and array libraries: Pandas and Numpy
@@ -19,7 +19,7 @@ Main Contributors: Yuehchen Tsou and Christine Johnson
 <li>Database: MySQL is a relational database management system
 <li>HTML, CSS, and JavaScript are used to control presentation, formatting, and layout 
   
-## Three main functions of the project
+## Three main functions of the project <a name="Three"></a>
 1. Simple Stock Recommendation List for Beginners
 2. Historical Price & Dividend for Favored Shares
 3. Times Series Machine Learning to Predict Stock Price
@@ -27,7 +27,7 @@ Main Contributors: Yuehchen Tsou and Christine Johnson
 ## Workflow
 <img width="433" alt="workflow" src="https://user-images.githubusercontent.com/50720457/108548049-88cadb00-72a8-11eb-89bf-562267807c0c.PNG">
   
-## Demo of our Project
+## Demo of our Project <a name="Demo"></a>
 https://user-images.githubusercontent.com/50720457/110575961-19187500-811d-11eb-9dfa-10dadb97c21f.mp4
 
 
