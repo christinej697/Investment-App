@@ -2,11 +2,11 @@
 Main Contributors: Yuehchen Tsou and Christine Johnson
 <br>This directory contains code for the StockSmart website application. The application is being created as a capstone project for Montana State University. The main code for the application is written in Python using the Flask framework and html to format the website. SQL is used for data manipulation. 
 # Table of Contents
-1. [Technologies Used](##Technologies used)
-2. [Project's Main Functions](## Three main functions of the project)
-3. [Workflow Diagram](## Workflow)
-4. [Project Demo](## Demo of our Project)
-5. [Citations](## Citations)
+1. [Technologies Used](#Technologies used)
+2. [Project's Main Functions](#Three main functions of the project)
+3. [Workflow Diagram](#Workflow)
+4. [Project Demo](#Demo of our Project)
+5. [Citations](#Citations)
 
 ## Technologies used
 <li>Python 3.6+
