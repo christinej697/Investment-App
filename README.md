@@ -13,6 +13,11 @@ Main Contributors: Yuehchen Tsou and Christine Johnson
 <br><li>Database: MySQL is a relational database management system
 <br><li>HTML, CSS, and JavaScript are used to control presentation, formatting, and layout 
   
+## Three main functions of the project
+1. Simple Recommendation for Beginners
+2. Historical Price & Dividend for Favored Shares
+3. Times Series Machine Learning to Predict Stock Price
+  
 ## Workflow
 <img width="433" alt="workflow" src="https://user-images.githubusercontent.com/50720457/108548049-88cadb00-72a8-11eb-89bf-562267807c0c.PNG">
   
