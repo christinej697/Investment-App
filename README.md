@@ -37,7 +37,7 @@ https://user-images.githubusercontent.com/50720457/110575961-19187500-811d-11eb-
 ## How to Run the Project <a name="Running"></a>
 After downloading source code from the github page, which will download as "Investment-App-main", open the folder within a running Python environment. To start the StockSmart Flask website, run the following three commands: (1) `export FLASK_APP=stockApp`, (2) `export FLASK_ENV=development`, and (3) `flask run`. Then click the resulting website link, or manually enter `http://127.0.0.1:5000/`, to see the website in action.
 
-## Unit Testing the Flask Application
+## Unit Testing the Flask Application <a name="Testing"></a>
 We used the python built-in framework `unittest`, to write the unit tests for our Python Flask application.
 
 ## Citations
@@ -45,24 +45,24 @@ We used the python built-in framework `unittest`, to write the unit tests for ou
 https://algotrading101.com/learn/yahoo-finance-api-guide/
 
 How To Make a Web Application Using Flask in Python 
-By Abdelhadi Dyouri, Published onApril 16, 2020
+<br> By Abdelhadi Dyouri, Published onApril 16, 2020
 https://www.digitalocean.com/community/tutorials/how-to-make-a-web-application-using-flask-in-python-3#step-6-%E2%80%94-displaying-a-single-post
 
 Creating Charts with Chart.js in a Flask Application
-JANUARY 1, 2017 / PATKENNEDY79@GMAIL.COM
-https://www.patricksoftwareblog.com/creating-charts-with-chart-js-in-a-flask-application/
+<br> JANUARY 1, 2017 / PATKENNEDY79@GMAIL.COM
+<br> https://www.patricksoftwareblog.com/creating-charts-with-chart-js-in-a-flask-application/
 
 Feature Selection for Time Series Forecasting with Python by Jason Brownlee on March 29, 2017 in Time Series
 https://machinelearningmastery.com/feature-selection-time-series-forecasting-python/
 
 Stock Market Predictions with LSTM in Python by Thushan Ganegedara January 1st, 2020
-<br>https://www.datacamp.com/community/tutorials/lstm-python-stock-market
+<br> https://www.datacamp.com/community/tutorials/lstm-python-stock-market
 
 Flask Paginate Doc
-https://pythonhosted.org/Flask-paginate/
+<br> https://pythonhosted.org/Flask-paginate/
 
 The Flask Mega-Tutorial Part IX: Pagination
-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ix-pagination
+<br> https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ix-pagination
 
 Unit Testing a Flask Application
-https://www.patricksoftwareblog.com/unit-testing-a-flask-application/
+<br> https://www.patricksoftwareblog.com/unit-testing-a-flask-application/
