@@ -85,6 +85,13 @@ def index():
     conn.close()
     return render_template('index.html', posts=posts)
 
+#---------------------------------------------------
+
+@app.route('/about', methods=('GET','POST'))
+def about():
+    return render_template('about.html')
+
+
 #---------------------------------------------
 
 @app.route('/<hists>', methods=('GET', 'POST'))
