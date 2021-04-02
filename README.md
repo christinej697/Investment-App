@@ -38,7 +38,7 @@ https://user-images.githubusercontent.com/50720457/110575961-19187500-811d-11eb-
 After downloading source code from the github page, which will download as "Investment-App-main", open the folder within a running Python environment. To start the StockSmart Flask website, run the following three commands: (1) `export FLASK_APP=stockApp`, (2) `export FLASK_ENV=development`, and (3) `flask run`. Then click the resulting website link, or manually enter `http://127.0.0.1:5000/`, to see the website in action.
 
 ## Unit Testing the Flask Application <a name="Testing"></a>
-We used the python built-in framework `unittest`, to write the unit tests for our Python Flask application.
+We used the python built-in framework `unittest`, to write the unit tests for our Python flask application. Our unit test are contained in the file `test.py`. We tested to make sure that flask was set up correctly, that each html page loads correctly, and that each page’s functions work correctly.
 
 ## Citations
 “Yahoo Finance API - A Complete Guide - AlgoTrading101 Blog.” Quantitative Trading Ideas and Guides - AlgoTrading101 Blog, 11 Jan. 2021 
