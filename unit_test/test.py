@@ -22,22 +22,32 @@
             self.assertTrue(b'Welcome to StockSmart' in response.data)
         
         # Ensure that the users html page loads correctly
-        def test_index_loads(self):
+        def test_user_loads(self):
+            tester = app.test_client(self)
+            response = tester.get('/signIn', content_type='html/text')
+            
+        # Ensure signin behaves correctly given the correct credentials
+        def test_sign_corr(self):
+            tester = app.test_client(self)
+            response = tester.get('/signIn', content_type='html/text')
+            
+        # Ensure signin behaves correctly given incorrect credentials
+        def test_sign_incorr(self):
             tester = app.test_client(self)
             response = tester.get('/signIn', content_type='html/text')
             
         # Ensure that the advice html page loads correctly
-        def test_index_loads(self):
+        def test_advice_loads(self):
             tester = app.test_client(self)
             response = tester.get('/signIn/advice', content_type='html/text')
             
         # Ensure that the dividend html page loads correctly
-        def test_index_loads(self):
+        def test_dividend_loads(self):
             tester = app.test_client(self)
             response = tester.get('/signIn/advice/dividend', content_type='html/text')
             
         # Ensure that the filter html page loads correctly
-        def test_index_loads(self):
+        def test_filter_loads(self):
             tester = app.test_client(self)
             response = tester.get('/signIn/advice/dividend/display', content_type='html/text')        
         
@@ -46,17 +56,15 @@
         # Ensure that the shares html page loads correctly
         def test_shares_loads(self):
             tester = app.test_client(self)
-            response = tester.get('/<hists>', content_type='html/text')
-            
-that each html page loads correctly, and that each page’s functions work correctly.            
+            response = tester.get('/<hists>', content_type='html/text')      
             
         # Ensure that the chart html page loads correctly
-        def test_index_loads(self):
+        def test_chart_loads(self):
             tester = app.test_client(self)
             response = tester.get('/timeseries/<ticker>', content_type='html/text')         
             
         # Ensure that the about html page loads correctly
-#        def test_index_loads(self):
+#        def test_about_loads(self):
 #            tester = app.test_client(self)
 #            response = tester.get('/about', content_type='html/text')
             
