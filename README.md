@@ -32,7 +32,6 @@ _Main Contributors: Yuehchen Tsou and Christine Johnson
 ![workflow](https://user-images.githubusercontent.com/50720457/110995530-ba7b1300-8337-11eb-9d2c-49402d4298ca.png)
   
 ## Demo of our Project <a name="Demo"></a>
-https://user-images.githubusercontent.com/50720457/110575961-19187500-811d-11eb-9dfa-10dadb97c21f.mp4
 https://user-images.githubusercontent.com/50720457/113515834-0cc4e380-9534-11eb-8b5c-d15dcdf39395.mp4
 
 ## How to Run the Project <a name="Running"></a>
