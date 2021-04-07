@@ -29,7 +29,6 @@ _Main Contributors: Yuehchen Tsou and Christine Johnson
 3. Times Series Machine Learning to Predict Stock Price
   
 ## Workflow
-![workflow-1](https://user-images.githubusercontent.com/50720457/113910757-704e4b80-9796-11eb-8c85-927c33bdaac2.png)
 ![workflow](https://user-images.githubusercontent.com/50720457/113911403-2c0f7b00-9797-11eb-9d9a-8d45a6a0e08f.png)
 
   
