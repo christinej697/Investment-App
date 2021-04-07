@@ -30,6 +30,8 @@ _Main Contributors: Yuehchen Tsou and Christine Johnson
   
 ## Workflow
 ![workflow](https://user-images.githubusercontent.com/50720457/110995530-ba7b1300-8337-11eb-9d2c-49402d4298ca.png)
+![workflow-1](https://user-images.githubusercontent.com/50720457/113910757-704e4b80-9796-11eb-8c85-927c33bdaac2.png)
+
   
 ## Demo of our Project <a name="Demo"></a>
 https://user-images.githubusercontent.com/50720457/113515834-0cc4e380-9534-11eb-8b5c-d15dcdf39395.mp4
