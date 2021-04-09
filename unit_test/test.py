@@ -1,7 +1,12 @@
 #----------------------------------------------------------
+# White BOx Testing technique
 # Performs basic unit tests for the stockApp flask application
 # using the built-in Python library "unittest"
+# Testing flow and functionality
 #----------------------------------------------------------
+import unittest
+import os
+
     try:
         from stockApp import stockApp
         import unittest
