@@ -1,4 +1,4 @@
-<h1 align = "center"> Investment Web Application: <img width="98" alt="StockSmart_Option 2-1" src="https://user-images.githubusercontent.com/50720457/115058858-f3605780-9ea2-11eb-98b0-31acecb585f3.png"> </h1>
+<h1 align = "center"> Investment Web Application: <img width="118" alt="StockSmart_Option 2-1" src="https://user-images.githubusercontent.com/50720457/115059053-3c181080-9ea3-11eb-846b-5c2ac1ed78a8.png"> </h1>
 
 _Main Contributors: Yuehchen Tsou and Christine Johnson
 <br>This directory contains code for the StockSmart website application. The application is being created as a capstone project for Montana State University. The main code for the application is written in Python using the Flask framework and html to format the website. SQL is used for data manipulation._
