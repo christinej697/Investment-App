@@ -33,6 +33,10 @@ _Main Contributors: Yuehchen Tsou and Christine Johnson
 
   
 ## Demo of our Project <a name="Demo"></a>
+
+https://user-images.githubusercontent.com/50720457/115663154-4ac85280-a2fd-11eb-8287-a2e9da414f8b.mp4
+
+
 https://user-images.githubusercontent.com/50720457/113515834-0cc4e380-9534-11eb-8b5c-d15dcdf39395.mp4
 
 ## How to Run the Project <a name="Running"></a>
