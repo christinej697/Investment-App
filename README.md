@@ -33,11 +33,8 @@ _Main Contributors: Yuehchen Tsou and Christine Johnson
 
   
 ## Demo of our Project <a name="Demo"></a>
-
 https://user-images.githubusercontent.com/50720457/115663154-4ac85280-a2fd-11eb-8287-a2e9da414f8b.mp4
 
-
-https://user-images.githubusercontent.com/50720457/113515834-0cc4e380-9534-11eb-8b5c-d15dcdf39395.mp4
 
 ## How to Run the Project <a name="Running"></a>
 After downloading source code from the github page, which will download as "Investment-App-main", open the folder within a running Python environment. To start the StockSmart Flask website, run the following three commands: (1) `export FLASK_APP=stockApp`, (2) `export FLASK_ENV=development`, and (3) `flask run`. Then click the resulting website link, or manually enter `http://127.0.0.1:5000/`, to see the website in action.
